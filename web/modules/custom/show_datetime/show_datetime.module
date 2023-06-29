@@ -1,0 +1,130 @@
+<?php
+
+use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
+use Drupal\taxonomy\Entity\Term;
+
+
+/**
+ * Implements hook_form_alter().
+ */
+function show_datetime_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // check if it's the registration form
+  if($form_id == 'student_registration_form') {
+    // get the username of the logged user
+    $user = \Drupal::currentUser()->getDisplayName();
+    $form['student_name']['#default_value'] = $user;
+  }
+}
+
+function update_counter($term_id, $val) {
+  $current_term = Term::load($term_id);
+  $current_value = $current_term->get('field_counter')->value;
+  $new_value = $current_value + $val;
+  $current_term->set('field_counter', $new_value);
+  $current_term->save();
+}
+
+
+function show_datetime_node_presave(NodeInterface $node) {
+  /** @var \Drupal\taxonomy\TermInterface $first_term */
+
+  /** UPDATE NEWS TITLE */
+  $terms = $node->get('field_news_type')->referencedEntities();
+
+  // get the first term
+  $first_term = reset($terms);
+
+  // add the first news type in the node's title
+  if ($first_term && !str_contains($node->getTitle(), $first_term->getName())) { //TODO: wont work if the term is in the title even if it's not in [ ]
+    $new_name = '[' . $first_term->getName() . '] ' . $node->getTitle();
+    $node->setTitle($new_name);
+  }
+
+  /** UPDATE NEWS TYPE COUNTER */
+  $old_terms_id = [];
+  if(!$node->isNew()) {
+    $old_terms = $node->original->get('field_news_type')->referencedEntities();
+    foreach ($old_terms as $term) {
+      $old_terms_id[] = $term->id();
+    }
+  }
+
+  // get the new terms ids
+  $terms_id = [];
+  foreach ($terms as $term) {
+    $terms_id[] = $term->id();
+  }
+
+  $removed_terms = array_diff($old_terms_id, $terms_id);
+  $added_terms = array_diff($terms_id, $old_terms_id);
+
+  foreach ($removed_terms as $term_id) {
+    update_counter($term_id, -1);
+  }
+
+  foreach ($added_terms as $term_id) {
+    update_counter($term_id, 1);
+  }
+
+  /** ADD NEW ITEMS TO VOCABULARY */
+  $new_vocabulary = $node->get('field_news_type_free')->getValue();
+
+  foreach($new_vocabulary as $new_term) {
+    $new_term = $new_term['value'];
+    $term_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+    $existing_terms = $term_storage->loadByProperties([
+      'name' => $new_term,
+      'vid' => 'news_types',
+    ]);
+    $ids = $term_storage->getQuery()
+      ->condition('field_counter', 5, '>')
+      ->accessCheck(TRUE)
+      ->execute();
+    $terms = $term_storage->loadMultiple($ids);
+    if (empty($existing_terms)) {
+      $term = $term_storage->create([
+        'vid' => 'news_types',
+        'name' => $new_term,
+      ]);
+      $term->save();
+    }
+  }
+}
+
+function show_datetime_node_delete(NodeInterface $node) {
+  $terms = $node->get('field_news_type')->referencedEntities();
+  $terms_id = [];
+  foreach ($terms as $term) {
+    $terms_id[] = $term->id();
+  }
+
+  foreach ($terms_id as $term_id) {
+    update_counter($term_id, -1);
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+/**
+ * Implements hook_theme().
+ */
+function show_datetime_theme($existing, $type, $theme, $path) {
+  return [
+    'link_list' => [
+      'variables' => [
+        'links' => [],
+      ],
+    ],
+  ];
+}
+
+function show_datetime_preprocess_link_list(&$variables) {
+  foreach ($variables['links'] as &$new_array) {
+    $new_array['#value'] = 'test | ' . $new_array['#value'];
+  }
+
+  $variables['new_field'] = 'new field added in preprocess hook';
+}

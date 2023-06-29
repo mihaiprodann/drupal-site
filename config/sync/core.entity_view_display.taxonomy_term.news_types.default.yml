@@ -1,0 +1,40 @@
+uuid: aac35f26-7659-44f6-9b73-adebf8f47b3e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.news_types.field_counter
+    - field.field.taxonomy_term.news_types.field_text
+    - taxonomy.vocabulary.news_types
+  module:
+    - text
+id: taxonomy_term.news_types.default
+targetEntityType: taxonomy_term
+bundle: news_types
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_counter:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_text:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

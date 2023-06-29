@@ -1,0 +1,29 @@
+uuid: a33b6afa-549f-4fa2-a163-425fdaee82f3
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.related_news_reverse
+  module:
+    - system
+    - views
+  theme:
+    - olivero
+id: views_block__related_news_reverse_block_1
+theme: olivero
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:related_news_reverse-block_1'
+settings:
+  id: 'views_block:related_news_reverse-block_1'
+  label: ''
+  label_display: visible
+  provider: views
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/node/*'

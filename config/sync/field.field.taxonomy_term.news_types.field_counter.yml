@@ -1,0 +1,25 @@
+uuid: 8b31ffc2-db8e-4051-9764-00bfec344727
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_counter
+    - taxonomy.vocabulary.news_types
+id: taxonomy_term.news_types.field_counter
+field_name: field_counter
+entity_type: taxonomy_term
+bundle: news_types
+label: Counter
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

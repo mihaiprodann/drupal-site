@@ -1,0 +1,22 @@
+uuid: 70f90485-9883-450f-981b-3af89436a86b
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - temanoua
+_core:
+  default_config_hash: iggZSiUKz4mYP1YPJ8SsUfFu79HIgOTt6IDy3Up59aM
+id: temanoua_powered
+theme: temanoua
+region: footer
+weight: -10
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  label_display: '0'
+  provider: system
+visibility: {  }

@@ -1,0 +1,21 @@
+uuid: 0d7f6999-427b-4d15-b049-81ca5a20c99b
+langcode: en
+status: true
+dependencies:
+  module:
+    - show_datetime
+  theme:
+    - olivero
+id: datetimeblock
+theme: olivero
+region: content
+weight: 0
+provider: null
+plugin: show_datetime_block
+settings:
+  id: show_datetime_block
+  label: 'DateTime block'
+  label_display: visible
+  provider: show_datetime
+  datetime_format: h
+visibility: {  }

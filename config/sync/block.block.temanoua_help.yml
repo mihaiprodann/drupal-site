@@ -1,0 +1,22 @@
+uuid: 216eeb41-09ca-4dc8-93b6-822a43859757
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - temanoua
+_core:
+  default_config_hash: MhtNdV__HKRTab0ZPjkPNfYL4Ng4UPBucDLoC7Rg5Eo
+id: temanoua_help
+theme: temanoua
+region: help
+weight: -30
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

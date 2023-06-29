@@ -1,0 +1,7 @@
+show_datetime.content:
+  path: '/datetime'
+  defaults:
+    _controller: 'Drupal\show_datetime\Controller\DateTimeController::content'
+    _title: 'Student form'
+  requirements:
+    _permission: 'access content'

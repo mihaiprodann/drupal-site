@@ -1,0 +1,12 @@
+/**
+ * If using a CSS pre-processor, tell it to overwrite this file. If not, place
+ * your custom CSS modifications here.
+ */
+
+a {
+  color: black;
+}
+
+a:hover {
+  text-decoration: none;
+}

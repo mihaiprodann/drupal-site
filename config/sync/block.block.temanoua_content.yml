@@ -1,0 +1,22 @@
+uuid: 639d889c-39cd-46d7-9b53-54cd5a223daf
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - temanoua
+_core:
+  default_config_hash: fNNLN48MSGSLiqwIFywCuxH2Dk_IxDbaP0kYhg_IPrg
+id: temanoua_content
+theme: temanoua
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }
